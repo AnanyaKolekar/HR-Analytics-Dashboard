@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+{% block title %}HR Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f3f4f6;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    .dashboard-container {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .dashboard-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+    }
+    
+    /* Added error message styling */
+    .error-message {
+        background-color: #fee2e2;
+        border: 1px solid #fca5a5;
+        border-left: 4px solid #ef4444;
+        color: #991b1b;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .error-message button {
+        background: none;
+        border: none;
+        color: #991b1b;
+        cursor: pointer;
+        font-size: 1.5rem;
+        padding: 0;
+    }
+    
+    .filter-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .filter-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        align-items: flex-end;
+    }
+    
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .filter-group label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .filter-group input,
+    .filter-group select {
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        transition: border-color 0.2s;
+    }
+    
+    .filter-group input:focus,
+    .filter-group select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .filter-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.875rem;
+    }
+    
+    .btn-primary {
+        background-color: #3b82f6;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2563eb;
+    }
+    
+    .btn-secondary {
+        background-color: #e5e7eb;
+        color: #374151;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #d1d5db;
+    }
+    
+    /* KPI Cards */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .kpi-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border-left: 4px solid #3b82f6;
+    }
+    
+    .kpi-card.attendance {
+        border-left-color: #10b981;
+    }
+    
+    .kpi-card.leaves {
+        border-left-color: #8b5cf6;
+    }
+    
+    .kpi-card.attrition {
+        border-left-color: #ef4444;
+    }
+    
+    .kpi-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .kpi-value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0.5rem 0;
+    }
+    
+    .kpi-detail {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 0.5rem;
+    }
+    
+    /* Charts Section */
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .chart-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .chart-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 1rem;
+    }
+    
+    .chart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+        background-color: #f9fafb;
+        border-radius: 6px;
+    }
+    
+    .chart-image {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 6px;
+    }
+    
+    .loading {
+        color: #6b7280;
+        font-style: italic;
+    }
+    
+    .error {
+        color: #ef4444;
+        padding: 1rem;
+        background-color: #fee2e2;
+        border-radius: 6px;
+        border-left: 4px solid #ef4444;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem;
+        }
+        
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .filter-controls {
+            grid-template-columns: 1fr;
+        }
+        
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Error Message Display -->
+    {% if error %}
+    <div class="error-message">
+        <span>{{ error }}</span>
+        <button onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    {% endif %}
+    
+    <!-- Header -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">HR Dashboard</h1>
+    </div>
+    
+    {% if kpis %}
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <form method="GET" id="filterForm" style="display: contents;">
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="department">Department</label>
+                    <select name="department" id="department">
+                        <option value="">All Departments</option>
+                        {% for dept in kpis.departments %}
+                            <option value="{{ dept }}" {% if filter.department == dept %}selected{% endif %}>{{ dept }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" name="start_date" id="start_date" value="{{ filter.start_date }}">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" name="end_date" id="end_date" value="{{ filter.end_date }}">
+                </div>
+                
+                <div class="filter-buttons">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <button type="reset" class="btn btn-secondary" onclick="location.href='{% url 'hr:dashboard' %}'">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+        <!-- Total Employees -->
+        <div class="kpi-card">
+            <div class="kpi-label">Total Employees</div>
+            <div class="kpi-value">{{ kpis.total_employees }}</div>
+        </div>
+        
+        <!-- Attendance Rate -->
+        <div class="kpi-card attendance">
+            <div class="kpi-label">Attendance Rate</div>
+            <div class="kpi-value">{{ kpis.attendance.attendance_percentage }}%</div>
+            <div class="kpi-detail">{{ kpis.attendance.present_days }} / {{ kpis.attendance.total_days }} days</div>
+        </div>
+        
+        <!-- Total Leaves -->
+        <div class="kpi-card leaves">
+            <div class="kpi-label">Total Leaves</div>
+            <div class="kpi-value">{{ kpis.leaves.total_leaves }}</div>
+            <div class="kpi-detail">{{ kpis.leaves.total_days }} days approved</div>
+        </div>
+        
+        <!-- Attrition Rate -->
+        <div class="kpi-card attrition">
+            <div class="kpi-label">Attrition Rate</div>
+            <div class="kpi-value">{{ kpis.attrition.attrition_rate }}%</div>
+            <div class="kpi-detail">{{ kpis.attrition.separated_count }} separations</div>
+        </div>
+    </div>
+    
+    <!-- Charts Section -->
+    <div class="charts-grid">
+        <!-- Attendance Chart -->
+        <div class="chart-card">
+            <h3 class="chart-title">Departmental Attendance</h3>
+            <div class="chart-container" id="attendanceChart">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+        
+        <!-- Leave Chart -->
+        <div class="chart-card">
+            <h3 class="chart-title">Leave Type Distribution</h3>
+            <div class="chart-container" id="leaveChart">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+        
+        <!-- Attrition Chart -->
+        <div class="chart-card">
+            <h3 class="chart-title">Departmental Attrition</h3>
+            <div class="chart-container" id="attritionChart">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Load charts from API endpoints
+    function loadChart(chartId, endpoint) {
+        const params = new URLSearchParams(window.location.search);
+        
+        fetch(`${endpoint}?${params.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                const chartDiv = document.getElementById(chartId);
+                if (data.success && data.data && data.data.length > 0) {
+                    const img = document.createElement('img');
+                    img.src = `data:image/png;base64,${data.image}`;
+                    img.className = 'chart-image';
+                    chartDiv.innerHTML = '';
+                    chartDiv.appendChild(img);
+                } else {
+                    chartDiv.innerHTML = '<div class="error">No data available for this period</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading chart:', error);
+                document.getElementById(chartId).innerHTML = '<div class="error">Error loading chart</div>';
+            });
+    }
+    
+    // Load all charts on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadChart('attendanceChart', '{% url "hr:attendance_chart" %}');
+        loadChart('leaveChart', '{% url "hr:leave_chart" %}');
+        loadChart('attritionChart', '{% url "hr:attrition_chart" %}');
+    });
+</script>
+{% endblock %}
