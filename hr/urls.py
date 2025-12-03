@@ -14,4 +14,8 @@ urlpatterns = [
     path('api/attendance-chart/', views.AttendanceChartView.as_view(), name='attendance_chart'),
     path('api/leave-chart/', views.LeaveChartView.as_view(), name='leave_chart'),
     path('api/attrition-chart/', views.AttritionChartView.as_view(), name='attrition_chart'),
+    
+    # Employee API endpoints
+    path('api/employees-by-department/', views.EmployeesByDepartmentView.as_view(), name='employees_by_department'),
+    path('api/employee-details/<str:emp_id>/', views.EmployeeDetailsView.as_view(), name='employee_details'),
 ]

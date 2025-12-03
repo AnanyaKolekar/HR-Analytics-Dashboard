@@ -142,6 +142,16 @@
         border-radius: 8px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         border-left: 4px solid #3b82f6;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .kpi-card.clickable {
+        cursor: pointer;
+    }
+    
+    .kpi-card.clickable:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
     }
     
     .kpi-card.attendance {
@@ -228,6 +238,219 @@
         border-left: 4px solid #ef4444;
     }
     
+    /* Employee List Panel */
+    .employee-panel {
+        position: fixed;
+        right: -400px;
+        top: 0;
+        width: 400px;
+        height: 100vh;
+        background: white;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+        z-index: 999;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        padding: 2rem;
+    }
+    
+    .employee-panel.active {
+        right: 0;
+    }
+    
+    .employee-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .employee-panel-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+    }
+    
+    .close-panel {
+        background: none;
+        border: 1px solid #e5e7eb;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-weight: bold;
+        line-height: 1;
+    }
+    
+    .close-panel:hover {
+        background-color: #f3f4f6;
+        color: #111827;
+        border-color: #d1d5db;
+    }
+    
+    .employee-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .employee-item {
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    
+    .employee-item:hover {
+        background-color: #f9fafb;
+        border-color: #3b82f6;
+    }
+    
+    .employee-name {
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 0.25rem;
+    }
+    
+    .employee-id {
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+    
+    /* Employee Detail Modal */
+    .employee-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .employee-modal.active {
+        display: flex;
+    }
+    
+    .employee-modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        position: relative;
+    }
+    
+    .employee-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .employee-modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+    }
+    
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .close-modal:hover {
+        background-color: #f3f4f6;
+    }
+    
+    .employee-detail-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .detail-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .detail-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+    }
+    
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .detail-item {
+        padding: 1rem;
+        background-color: #f9fafb;
+        border-radius: 6px;
+    }
+    
+    .detail-item-label {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-bottom: 0.25rem;
+    }
+    
+    .detail-item-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #111827;
+    }
+    
+    .loading-spinner {
+        text-align: center;
+        padding: 2rem;
+        color: #6b7280;
+    }
+    
+    .error-message-box {
+        padding: 1rem;
+        background-color: #fee2e2;
+        border: 1px solid #fca5a5;
+        border-radius: 6px;
+        color: #991b1b;
+        margin: 1rem 0;
+    }
+    
     @media (max-width: 768px) {
         .dashboard-container {
             padding: 1rem;
@@ -245,6 +468,16 @@
         
         .charts-grid {
             grid-template-columns: 1fr;
+        }
+        
+        .employee-panel {
+            width: 100%;
+            right: -100%;
+        }
+        
+        .employee-modal-content {
+            width: 95%;
+            padding: 1.5rem;
         }
     }
 </style>
@@ -301,9 +534,16 @@
     <!-- KPI Cards -->
     <div class="kpi-grid">
         <!-- Total Employees -->
-        <div class="kpi-card">
+        <div class="kpi-card {% if filter.department %}clickable{% endif %}" 
+             id="totalEmployeesCard" 
+             {% if filter.department %}data-department="{{ filter.department }}"{% endif %}>
             <div class="kpi-label">Total Employees</div>
             <div class="kpi-value">{{ kpis.total_employees }}</div>
+            {% if filter.department %}
+                <div class="kpi-detail" style="margin-top: 0.5rem; font-size: 0.75rem; color: #3b82f6;">
+                    Click to view employees in {{ filter.department }}
+                </div>
+            {% endif %}
         </div>
         
         <!-- Attendance Rate -->
@@ -357,6 +597,30 @@
     {% endif %}
 </div>
 
+<!-- Employee List Panel -->
+<div class="employee-panel" id="employeePanel">
+    <div class="employee-panel-header">
+        <h3 class="employee-panel-title" id="panelTitle">Employees</h3>
+        <button class="close-panel" id="closePanel">&times;</button>
+    </div>
+    <div id="employeeListContainer">
+        <div class="loading-spinner">Loading employees...</div>
+    </div>
+</div>
+
+<!-- Employee Detail Modal -->
+<div class="employee-modal" id="employeeModal">
+    <div class="employee-modal-content">
+        <div class="employee-modal-header">
+            <h3 class="employee-modal-title" id="modalTitle">Employee Details</h3>
+            <button class="close-modal" id="closeModal">&times;</button>
+        </div>
+        <div id="employeeDetailContainer">
+            <div class="loading-spinner">Loading details...</div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Load charts from API endpoints
     function loadChart(chartId, endpoint) {
@@ -382,11 +646,205 @@
             });
     }
     
-    // Load all charts on page load
+    // Employee list functionality
+    function loadEmployeesByDepartment(department) {
+        const panel = document.getElementById('employeePanel');
+        const container = document.getElementById('employeeListContainer');
+        const title = document.getElementById('panelTitle');
+        
+        title.textContent = `Employees - ${department}`;
+        container.innerHTML = '<div class="loading-spinner">Loading employees...</div>';
+        panel.classList.add('active');
+        
+        fetch(`{% url 'hr:employees_by_department' %}?department=${encodeURIComponent(department)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.employees.length === 0) {
+                        container.innerHTML = '<div class="error-message-box">No employees found in this department.</div>';
+                        return;
+                    }
+                    
+                    const list = document.createElement('ul');
+                    list.className = 'employee-list';
+                    
+                    data.employees.forEach(emp => {
+                        const item = document.createElement('li');
+                        item.className = 'employee-item';
+                        item.dataset.empId = emp.emp_id;
+                        item.innerHTML = `
+                            <div class="employee-name">${emp.name}</div>
+                            <div class="employee-id">ID: ${emp.emp_id}</div>
+                        `;
+                        item.addEventListener('click', () => loadEmployeeDetails(emp.emp_id));
+                        list.appendChild(item);
+                    });
+                    
+                    container.innerHTML = '';
+                    container.appendChild(list);
+                } else {
+                    container.innerHTML = `<div class="error-message-box">Error: ${data.error || 'Failed to load employees'}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error loading employees:', error);
+                container.innerHTML = '<div class="error-message-box">Error loading employees. Please try again.<br><small>' + error.message + '</small></div>';
+            });
+    }
+    
+    // Employee details functionality
+    function loadEmployeeDetails(empId) {
+        const modal = document.getElementById('employeeModal');
+        const container = document.getElementById('employeeDetailContainer');
+        const title = document.getElementById('modalTitle');
+        
+        // Get current filter dates
+        const urlParams = new URLSearchParams(window.location.search);
+        const startDate = urlParams.get('start_date') || '';
+        const endDate = urlParams.get('end_date') || '';
+        
+        container.innerHTML = '<div class="loading-spinner">Loading employee details...</div>';
+        modal.classList.add('active');
+        
+        let url = `{% url 'hr:employee_details' 'PLACEHOLDER' %}`.replace('PLACEHOLDER', empId);
+        if (startDate || endDate) {
+            const params = new URLSearchParams();
+            if (startDate) params.append('start_date', startDate);
+            if (endDate) params.append('end_date', endDate);
+            url += '?' + params.toString();
+        }
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.employee) {
+                    // Safely access all fields with fallbacks
+                    const emp = data.employee || {};
+                    const attendanceRate = data.attendance_rate || 0;
+                    const totalLeaves = data.total_leaves || 0;
+                    const totalWorkingDays = data.total_working_days || 0;
+                    const attendanceDetails = data.attendance_details || {};
+                    const leaveDetails = data.leave_details || {};
+                    
+                    title.textContent = emp.name || 'Employee Details';
+                    
+                    const html = `
+                        <div class="employee-detail-section">
+                            <div class="detail-label">Employee Information</div>
+                            <div style="margin-top: 0.5rem;">
+                                <div><strong>ID:</strong> ${emp.emp_id || 'N/A'}</div>
+                                <div><strong>Department:</strong> ${emp.department || 'N/A'}</div>
+                                <div><strong>Join Date:</strong> ${emp.join_date ? new Date(emp.join_date).toLocaleDateString() : 'N/A'}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="employee-detail-section">
+                            <div class="detail-label">Attendance Rate</div>
+                            <div class="detail-value">${attendanceRate}%</div>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Present Days</div>
+                                    <div class="detail-item-value">${attendanceDetails.present_days || 0}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Absent Days</div>
+                                    <div class="detail-item-value">${attendanceDetails.absent_days || 0}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Total Days</div>
+                                    <div class="detail-item-value">${attendanceDetails.total_days || 0}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Working Days</div>
+                                    <div class="detail-item-value">${totalWorkingDays}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="employee-detail-section">
+                            <div class="detail-label">Leave Statistics</div>
+                            <div class="detail-value">${totalLeaves} Leaves</div>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Total Leave Days</div>
+                                    <div class="detail-item-value">${leaveDetails.total_days || 0}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-item-label">Avg Duration</div>
+                                    <div class="detail-item-value">${leaveDetails.average_duration ? leaveDetails.average_duration.toFixed(1) : '0.0'} days</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = `<div class="error-message-box">Error: ${data.error || 'Failed to load employee details'}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error loading employee details:', error);
+                container.innerHTML = '<div class="error-message-box">Error loading employee details. Please try again.<br><small>' + (error.message || 'Unknown error') + '</small></div>';
+            });
+    }
+    
+    // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
+        // Load charts
         loadChart('attendanceChart', '{% url "hr:attendance_chart" %}');
         loadChart('leaveChart', '{% url "hr:leave_chart" %}');
         loadChart('attritionChart', '{% url "hr:attrition_chart" %}');
+        
+        // Total Employees card click handler
+        const totalEmployeesCard = document.getElementById('totalEmployeesCard');
+        if (totalEmployeesCard && totalEmployeesCard.classList.contains('clickable')) {
+            totalEmployeesCard.addEventListener('click', function() {
+                const department = this.dataset.department;
+                if (department) {
+                    loadEmployeesByDepartment(department);
+                }
+            });
+        }
+        
+        // Close panel button
+        const closePanel = document.getElementById('closePanel');
+        if (closePanel) {
+            closePanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('employeePanel').classList.remove('active');
+            });
+        }
+        
+        // Close panel when clicking outside
+        const employeePanel = document.getElementById('employeePanel');
+        if (employeePanel) {
+            document.addEventListener('click', function(e) {
+                if (employeePanel.classList.contains('active')) {
+                    const card = document.getElementById('totalEmployeesCard');
+                    if (!employeePanel.contains(e.target) && (!card || !card.contains(e.target))) {
+                        employeePanel.classList.remove('active');
+                    }
+                }
+            });
+        }
+        
+        // Close modal button
+        const closeModal = document.getElementById('closeModal');
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                document.getElementById('employeeModal').classList.remove('active');
+            });
+        }
+        
+        // Close modal when clicking outside
+        const employeeModal = document.getElementById('employeeModal');
+        if (employeeModal) {
+            employeeModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        }
     });
 </script>
 {% endblock %}

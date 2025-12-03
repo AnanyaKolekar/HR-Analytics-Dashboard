@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,24 +10,413 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
+        /* Theme Variables */
+        :root {
+            --nav-bg: #1f2937;
+            --nav-text: #ffffff;
+            --nav-hover: #374151;
+            --body-bg: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+        
+        [data-theme="dark"] {
+            --nav-bg: #111827;
+            --nav-text: #f9fafb;
+            --nav-hover: #1f2937;
+            --body-bg: #0f172a;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+        }
+        
+        body {
+            background-color: var(--body-bg);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background-color: var(--nav-bg);
+            color: var(--nav-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-brand {
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .user-dropdown {
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background-color: var(--nav-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+        
+        .user-menu.active {
+            display: block;
+        }
+        
+        .user-menu-item {
+            padding: 0.75rem 1rem;
+            color: var(--nav-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+        }
+        
+        .user-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-menu-item:hover {
+            background-color: var(--nav-hover);
+        }
+        
+        .user-menu-item.logout {
+            color: #ef4444;
+        }
+        
+        .user-menu-item.logout:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+        
+        .settings-dropdown {
+            position: relative;
+        }
+        
+        .settings-button {
+            background: none;
+            border: none;
+            color: var(--nav-text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+            font-size: 1.25rem;
+        }
+        
+        .settings-button:hover {
+            background-color: var(--nav-hover);
+        }
+        
+        .settings-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background-color: var(--nav-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+        
+        .settings-menu.active {
+            display: block;
+        }
+        
+        .settings-menu-item {
+            padding: 0.75rem 1rem;
+            color: var(--nav-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .settings-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-menu-item:hover {
+            background-color: var(--nav-hover);
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .theme-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background-color: #4b5563;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .theme-switch.active {
+            background-color: #3b82f6;
+        }
+        
+        .theme-switch-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-switch.active .theme-switch-slider {
+            transform: translateX(20px);
+        }
+        
+        .logout-link {
+            color: var(--nav-text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background-color: var(--nav-hover);
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            display: inline-block;
+        }
+        
+        .logout-link:hover {
+            background-color: #4b5563;
+        }
+        
+        .login-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background-color: #3b82f6;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .login-link:hover {
+            background-color: #2563eb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .nav-brand {
+                font-size: 1rem;
+            }
+            
+            .user-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+            
+            .settings-menu {
+                min-width: 180px;
+            }
+            
+            .user-menu {
+                min-width: 180px;
+            }
+            
+            .user-menu .settings-menu {
+                position: relative;
+                margin-top: 0;
+                margin-left: 0.5rem;
+                border: none;
+                box-shadow: none;
+                background-color: rgba(0,0,0,0.1);
+                border-radius: 4px;
+            }
+            
+            .user-menu .settings-menu.active {
+                display: block;
+            }
+            
+            .user-menu .settings-dropdown {
+                position: relative;
+            }
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
-    <nav style="background-color: #1f2937; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-size: 1.25rem; font-weight: bold;">HR Dashboard</div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+    <nav>
+        <div class="nav-brand">
+            HR Dashboard
+        </div>
+        <div class="nav-right">
             {% if user.is_authenticated %}
-                <span>Welcome, {{ user.username }}</span>
-                <a href="/admin/logout/" style="color: white; text-decoration: none; padding: 0.5rem 1rem; background-color: #374151; border-radius: 6px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#4b5563'" onmouseout="this.style.backgroundColor='#374151'">Logout</a>
+                <div class="user-dropdown">
+                    <div class="user-avatar" id="userAvatar" title="{{ user.username }}">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <div class="user-menu" id="userMenu">
+                        <div class="settings-dropdown">
+                            <div class="user-menu-item" id="settingsMenuItem">
+                                <span>⚙️ Settings</span>
+                            </div>
+                            <div class="settings-menu" id="settingsMenu">
+                                <div class="settings-menu-item">
+                                    <span>Theme</span>
+                                    <div class="theme-toggle">
+                                        <span style="font-size: 0.875rem;">Light</span>
+                                        <div class="theme-switch" id="themeSwitch">
+                                            <div class="theme-switch-slider"></div>
+                                        </div>
+                                        <span style="font-size: 0.875rem;">Dark</span>
+                                    </div>
+                                </div>
+                                <div class="settings-menu-item" style="cursor: default; opacity: 0.6;">
+                                    <span>More settings coming soon...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:logout' %}" class="user-menu-item logout">Logout</a>
+                    </div>
+                </div>
             {% else %}
-                <a href="/admin/login/" style="color: white; text-decoration: none; padding: 0.5rem 1rem; background-color: #3b82f6; border-radius: 6px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#2563eb'" onmouseout="this.style.backgroundColor='#3b82f6'">Login</a>
+                <a href="/admin/login/" class="login-link">Login</a>
             {% endif %}
         </div>
     </nav>
 
     <!-- Content -->
     {% block content %}{% endblock %}
+    
+    <script>
+        // Theme Toggle Functionality
+        (function() {
+            // Initialize theme from localStorage
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const htmlRoot = document.getElementById('html-root');
+            const themeSwitch = document.getElementById('themeSwitch');
+            
+            if (savedTheme === 'dark') {
+                htmlRoot.setAttribute('data-theme', 'dark');
+                if (themeSwitch) {
+                    themeSwitch.classList.add('active');
+                }
+            }
+            
+            // User dropdown toggle (avatar click)
+            const userAvatar = document.getElementById('userAvatar');
+            const userMenu = document.getElementById('userMenu');
+            
+            if (userAvatar && userMenu) {
+                userAvatar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userMenu.classList.toggle('active');
+                    // Close settings menu when opening user menu
+                    const settingsMenu = document.getElementById('settingsMenu');
+                    if (settingsMenu) {
+                        settingsMenu.classList.remove('active');
+                    }
+                });
+                
+                // Settings submenu toggle
+                const settingsMenuItem = document.getElementById('settingsMenuItem');
+                const settingsMenu = document.getElementById('settingsMenu');
+                
+                if (settingsMenuItem && settingsMenu) {
+                    settingsMenuItem.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        settingsMenu.classList.toggle('active');
+                    });
+                }
+                
+                // Close dropdowns when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (userAvatar && userMenu && !userAvatar.contains(e.target) && !userMenu.contains(e.target)) {
+                        userMenu.classList.remove('active');
+                        if (settingsMenu) {
+                            settingsMenu.classList.remove('active');
+                        }
+                    }
+                });
+            }
+            
+            // Theme switch handler
+            if (themeSwitch) {
+                themeSwitch.addEventListener('click', function() {
+                    const isDark = htmlRoot.getAttribute('data-theme') === 'dark';
+                    
+                    if (isDark) {
+                        htmlRoot.removeAttribute('data-theme');
+                        themeSwitch.classList.remove('active');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        htmlRoot.setAttribute('data-theme', 'dark');
+                        themeSwitch.classList.add('active');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
