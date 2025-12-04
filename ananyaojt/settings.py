@@ -23,9 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*re1g(&#u6=+3ny^sf_03et+)d+&hd+33t3*#xyxhg=ltg&bxt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*",          # allow all HTTPS (Django 4.1+ supports wildcard)
+    "http://*",           # optional for local testing
+    "https://hr-analytics-dashboard-1.onrender.com"
+]
 
 
 # Application definition
