@@ -26,7 +26,7 @@ from .charts import ChartGenerator
 
 
 class DashboardView(LoginRequiredMixin, View):
-    """Main dashboard page showing KPIs and charts"""
+  
     login_url = 'admin:login'
 
     def get(self, request):
@@ -76,7 +76,7 @@ class DashboardView(LoginRequiredMixin, View):
                 end_date=end_date
             )
 
-            # Calculate KPIs with error handling
+           
             try:
                 # Filter total employees by department if specified
                 if department:
@@ -184,11 +184,11 @@ class DashboardView(LoginRequiredMixin, View):
 
 
 class AttendanceChartView(LoginRequiredMixin, View):
-    """API endpoint for attendance chart data"""
+    
     login_url = 'admin:login'
 
     def get(self, request):
-        """Return attendance chart as base64 image"""
+        
         try:
             department = request.GET.get('department', None)
             start_date_str = request.GET.get('start_date', None)
